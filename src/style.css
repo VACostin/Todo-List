@@ -1,0 +1,86 @@
+body {
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+}
+
+#header,
+#footer {
+  display: flex;
+  justify-content: center;
+  background-color: grey;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+#content {
+  display: flex;
+  background-color: rgb(240,248,255);
+  min-height: calc(100vh - 120px);
+}
+
+#left {
+  background-color: rgb(217,242,255);
+  width: 200px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+button {
+  min-width: 70px;
+}
+
+hr {
+  width: 99%;
+}
+
+.section {
+  padding: 5px;
+  margin: 10px;
+}
+
+.section:hover {
+  border-radius: 12px;
+  background-color: grey;
+}
+
+#right {
+  width: calc(100vw - 200px);
+  padding: 30px;
+  overflow: auto;
+}
+
+.task {
+  width: 500px;
+}
+
+.task:not(#addTodoPopup):hover {
+  background-color: grey;
+}
+
+#popupButtons {
+  display: flex;
+  justify-content: center;
+}
+
+#buttonSave {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#buttonCancel {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+input {
+  width: 100%;
+}
