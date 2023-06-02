@@ -1,33 +1,54 @@
-import storage from './storage';
+import { format, isToday } from 'date-fns';
+import dateFormat from 'dateformat';
+import localStore from './localStore';
 import fieldAddTodo from './rightSide/fieldAddTodo';
 import fieldPopup from './rightSide/fieldPopup';
+import fieldTodo from './rightSide/fieldTodo';
 
 export default class handleRight {
 
-  static load() {
-    fieldAddTodo.clickAddTodo(handleRight.prepareUserInput);
-    fieldPopup.clickConfirm(handleRight.processUserInput);
-    fieldPopup.clickCancel(handleRight.resetFields);
+  static init() {
+    handleRight.initPopup();
+    fieldTodo.init();
+    handleRight.initAddTodo();
     handleRight.loadAll();
   }
 
+  static initAddTodo() {
+    fieldAddTodo.init();
+    fieldAddTodo.clickAddTodo(handleRight.prepareUserInput);
+  }
+
+  static initPopup() {
+    fieldPopup.init();
+    fieldPopup.clickConfirm(handleRight.processUserInput);
+    fieldPopup.clickCancel(handleRight.resetFields);
+  }
+
   static loadAll() {
+    handleRight.project = 'noProject';
+    const todoList = localStore.loadAll('all');
+    fieldTodo.renderTodos(todoList);
     handleRight.resetFields();
-    const dateStart = new Date('2023.06.01');
-    const dateEnd = new Date('2100.01.01');
-    handleRight.load(dateStart, dateEnd);
   }
 
   static loadToday() {
+    const todoList = localStore.loadAll('today');
+    fieldTodo.renderTodos(todoList);
     handleRight.hideBothFields();
   }
 
   static loadThisWeek() {
+    const todoList = localStore.loadAll('thisWeek');
+    fieldTodo.renderTodos(todoList);
     handleRight.hideBothFields();
   }
 
-  static loadProject(name) {
-    console.log(`loaded${name}`);
+  static loadProject(projectName) {
+    handleRight.project = projectName;
+    const todoList = localStore.load(projectName);
+    fieldTodo.renderTodos(todoList);
+    handleRight.resetFields();
   }
 
   static prepareUserInput() {
@@ -36,9 +57,13 @@ export default class handleRight {
   }
 
   static processUserInput() {
-    if(fieldPopup.hasValidInput()){
-      handleRight.insertNewTodo();
-      handleRight.resetFields();
+    if (fieldPopup.hasValidInput()) {
+      const object = fieldPopup.getInput();
+      localStore.insert(object, handleRight.project);
+      if (handleRight.project == 'noProject')
+        handleRight.loadAll();
+      else
+        handleRight.loadProject(handleRight.project);
     }
   }
 
@@ -52,21 +77,7 @@ export default class handleRight {
     fieldAddTodo.hide();
   }
 
-  static insertNewTodo() {
-    // storage magic
-    // dom magic
-    handleRight.resetFields();
+  static clearAll() {
+    localStore.clear();
   }
-
-  static load(dateStart, dateEnd) {
-    console.log(localStorage);
-  }
-
-  static fill(bigObject) {
-
-    //bigObject.forEach(todo => {
-      //do DOM magic      
-   // });
-  }
-
 }

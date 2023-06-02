@@ -1,34 +1,45 @@
+import { format } from 'date-fns'
+
 export default class fieldPopup {
 
-  right = document.querySelector('#right');
-  popupField = document.querySelector('#fieldPopup');
-  input = document.querySelector('input');
+  static init() {
+    this.right = document.querySelector('#right');
+    this.popupField = document.querySelector('#fieldPopup');
+    this.inputText = document.querySelector('#inputText');
+    this.inputDate = document.querySelector('#inputDate');
+  }
 
   static clickConfirm(processUserInput) {
-    const button = document.querySelector('confirmButton');
-    button.addEventListener('click', processUserInput);
+    const button = document.querySelector('#buttonConfirm');
+    button.addEventListener('click', () => processUserInput());
   }
 
   static clickCancel(resetFields) {
-    const button = document.querySelector('cancelButton');
-    button.addEventListener('click', resetFields);
+    const button = document.querySelector('#buttonCancel');
+    button.addEventListener('click', () => resetFields());
   }
 
   static show() {
     if (!document.querySelector('#fieldPopup'))
-      right.appendChild(popupField);
+      this.right.appendChild(this.popupField);
   }
 
   static hide() {
-    input.value = '';
-    popupField.remove();
+    if (document.querySelector('#fieldPopup')) {
+      this.inputText.value = ''
+      this.popupField.remove();
+    }
   }
 
   static hasValidInput() {
-    return input.value.length > 0;
+    return this.inputText.value.length > 0 && this.inputDate.value.length > 0;
   }
 
   static getInput() {
-    return input;
+    const object = {
+      todo: this.inputText.value,
+      dateEnd: this.inputDate.value
+    };
+    return object;
   }
 }

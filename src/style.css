@@ -60,15 +60,18 @@ hr {
 
 .task {
   width: 500px;
+  display: flex;
+  gap: 10px;
 }
 
-.task:not(#addTodoPopup):hover {
+.task:not(#fieldPopup):hover {
   background-color: grey;
 }
 
 #popupButtons {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  margin-top: 5px;
 }
 
 #buttonSave {
@@ -78,9 +81,18 @@ hr {
 
 #buttonCancel {
   margin-left: 10%;
-  margin-right: 10%;
+  margin-right: 16.5%;
 }
 
 input {
-  width: 100%;
+  width: 40%;
+}
+
+#inputProject {
+  width: 95%;
+}
+
+#popupButtonsLeft {
+  display: flex;
+  justify-content: space-between;
 }

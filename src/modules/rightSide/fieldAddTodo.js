@@ -1,20 +1,22 @@
 export default class fieldAddTodo {
 
-  right = document.querySelector('#right');
-  addTodoField = document.querySelector('#fieldAddTodo');
+  static init() {
+    this.right = document.querySelector('#right');
+    this.addTodoField = document.querySelector('#fieldAddTodo');
+  }
 
   static clickAddTodo(prepareUserInput) {
-    button = document.querySelector('#buttonAddTodo');
+    const button = document.querySelector('#buttonAddTodo');
     button.addEventListener('click', () => prepareUserInput());
   }
 
   static show() {
     if (!document.querySelector('#fieldAddTodo'))
-      right.appendChild(addTodoField);
+      this.right.appendChild(this.addTodoField);
   }
 
   static hide() {
-    addTodoField.remove();
+    this.addTodoField.remove();
   }
 
 }

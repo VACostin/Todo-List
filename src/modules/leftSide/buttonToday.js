@@ -1,16 +1,12 @@
-import handleRight from "../handleRight";
-
 const buttonToday = (() => {
 
-  const load = () => {
+  const init = (loadToday) => {
     const button = document.querySelector('#buttonToday');
-    button.addEventListener('click', () => {
-      handleRight.loadToday();
-    });
+    button.addEventListener('click', () => loadToday());
   };
 
   return {
-    load,
+    init,
   };
 })();
 
