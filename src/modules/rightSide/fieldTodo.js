@@ -1,5 +1,6 @@
 export default class fieldTodo {
-  static init() {
+  static init(removeCallBack) {
+    this.removeCallBack = removeCallBack;
     this.right = document.querySelector('#right');
     this.div = document.createElement('div');
     fieldTodo.manipulateDOM();
@@ -13,9 +14,9 @@ export default class fieldTodo {
     this.div.appendChild(todoDate);
   }
 
-  static renderTodos(todoList) {
+  static renderTodos(projectName, todoList) {
     fieldTodo.removeAllChildNodes(this.right);
-    todoList.forEach(todoObject => fieldTodo.add(todoObject));
+    todoList.forEach(todoObject => fieldTodo.add(projectName, todoObject));
   };
 
   static removeAllChildNodes(parent) {
@@ -24,15 +25,15 @@ export default class fieldTodo {
     }
 }
 
-  static add(todoObject) {
+  static add(projectName, todoObject) {
     const todoItem = this.div.cloneNode(true);
     todoItem.setAttribute('id', todoObject.todo);
     todoItem.firstChild.textContent = `Name: ${todoObject.todo}`;
     todoItem.lastChild.textContent = `Date: ${todoObject.dateEnd}`;
+    const remove = document.createElement('button');
+    remove.textContent = 'Remove';
+    remove.addEventListener('click', () => fieldTodo.removeCallBack(projectName, todoObject));
+    todoItem.appendChild(remove);
     this.right.appendChild(todoItem);
-  };
-
-  static remove() {
-
   };
 }

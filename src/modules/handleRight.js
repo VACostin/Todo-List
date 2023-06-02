@@ -9,7 +9,7 @@ export default class handleRight {
 
   static init() {
     handleRight.initPopup();
-    fieldTodo.init();
+    fieldTodo.init(handleRight.removeTodo);
     handleRight.initAddTodo();
     handleRight.loadAll();
   }
@@ -28,26 +28,26 @@ export default class handleRight {
   static loadAll() {
     handleRight.project = 'noProject';
     const todoList = localStore.loadAll('all');
-    fieldTodo.renderTodos(todoList);
+    fieldTodo.renderTodos(handleRight.project, todoList);
     handleRight.resetFields();
   }
 
   static loadToday() {
     const todoList = localStore.loadAll('today');
-    fieldTodo.renderTodos(todoList);
+    fieldTodo.renderTodos(handleRight.project, todoList);
     handleRight.hideBothFields();
   }
 
   static loadThisWeek() {
     const todoList = localStore.loadAll('thisWeek');
-    fieldTodo.renderTodos(todoList);
+    fieldTodo.renderTodos(handleRight.project, todoList);
     handleRight.hideBothFields();
   }
 
   static loadProject(projectName) {
     handleRight.project = projectName;
     const todoList = localStore.load(projectName);
-    fieldTodo.renderTodos(todoList);
+    fieldTodo.renderTodos(handleRight.project, todoList);
     handleRight.resetFields();
   }
 
@@ -65,6 +65,11 @@ export default class handleRight {
       else
         handleRight.loadProject(handleRight.project);
     }
+  }
+
+  static removeTodo(projectName, todoObject) {
+    localStore.delete(todoObject, projectName);
+    handleRight.loadProject(projectName);
   }
 
   static resetFields() {

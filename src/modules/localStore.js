@@ -1,6 +1,7 @@
 export default class localStore {
 
   static load(projectName) {
+    console.log(`fetching data for ${projectName}`);
     const todoList = JSON.parse(localStorage.getItem(projectName))
     return todoList;
   }
@@ -51,6 +52,13 @@ export default class localStore {
 
     const todoList = JSON.parse(localStorage.getItem(projectName));
     todoList.push(object);
+    localStorage.setItem(projectName, JSON.stringify(todoList));
+  }
+
+  static delete(object, projectName) {
+    const todoList = JSON.parse(localStorage.getItem(projectName));
+    const index = todoList.findIndex((objectTarget) => objectTarget.todo == object.todo);
+    todoList.splice(index, 1);
     localStorage.setItem(projectName, JSON.stringify(todoList));
   }
 
